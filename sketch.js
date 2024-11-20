@@ -1,4 +1,4 @@
-let player;
+let playerLvl4;
 let belt;
 let beltSpeed = 2;
 let beltDirectionX = 1;
@@ -17,8 +17,8 @@ function setup() {
   createCanvas(800, 600);
 
   // Create player sprite
-  player = new Sprite(width / 2, height / 2, 40, 40); // Positioned at center
-  player.color = 'blue';
+  playerLvl4 = new Sprite(width / 2, height / 2, 40, 40, 'dynamic'); // Positioned at center
+
 
   // Create the "belt" sprite
   belt = new Sprite(width * 0.1, height * 0.9, 30, 30); // Positioned at the bottom-left corner
@@ -37,17 +37,17 @@ function draw() {
   background(220);
 
   // Player movement
-  if (kb.pressing('left')) player.vel.x = -5;
-  else if (kb.pressing('right')) player.vel.x = 5;
-  else player.vel.x = 0;
+  if (kb.pressing('left')) playerLvl4.vel.x = -5;
+  else if (kb.pressing('right')) playerLvl4.vel.x = 5;
+  else playerLvl4.vel.x = 0;
 
-  if (kb.pressing('up')) player.vel.y = -5;
-  else if (kb.pressing('down')) player.vel.y = 5;
-  else player.vel.y = 0;
+  if (kb.pressing('up')) playerLvl4.vel.y = -5;
+  else if (kb.pressing('down')) playerLvl4.vel.y = 5;
+  else playerLvl4.vel.y = 0;
 
   // Constrain player within screen boundaries
-  player.x = constrain(player.x, player.w / 2, width - player.w / 2);
-  player.y = constrain(player.y, player.h / 2, height - player.h / 2);
+  playerLvl4.x = constrain(playerLvl4.x, playerLvl4.w / 2, width - playerLvl4.w / 2);
+  playerLvl4.y = constrain(playerLvl4.y, playerLvl4.h / 2, height - playerLvl4.h / 2);
 
   // Move the "belt" sprite
   belt.x += beltSpeed * beltDirectionX;
@@ -84,5 +84,15 @@ function draw() {
     houseDirectionY *= -1; // Reverse vertical movement
   }
 
+  //collisions
+  playerLvl4.overlaps(belt, resetForLvl4);
+  playerLvl4.overlaps(car, resetForLvl4);
+  playerLvl4.overlaps(house, resetForLvl4);
+
  
+}
+
+function resetForLvl4() {
+	playerLvl4.x = width / 2;
+	playerLvl4.y = height / 2;
 }
